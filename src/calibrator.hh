@@ -33,8 +33,13 @@ public:
      * The constructor will throw an exception,
      * if the touchscreen is not of the type it supports
      */
-    Calibrator(const char* const device_name, const XYinfo& axys,
-        const bool verbose, const int thr_misclick=0, const int thr_doubleclick=0, const OutputType output_type=OUTYPE_AUTO);
+    Calibrator(const char* const device_name, 
+               const XYinfo& axys,
+               const bool verbose, 
+               const int thr_misclick=0, 
+               const int thr_doubleclick=0, 
+               const OutputType output_type=OUTYPE_AUTO,
+               const bool use_timeout=1);
     ~Calibrator() {}
 
     // set the doubleclick treshold
@@ -54,6 +59,9 @@ public:
     // get the sysfs name of the device,
     // returns NULL if it can not be found
     const char* get_sysfs_name();
+    
+    const bool get_use_timeout() const
+    { return use_timeout; }
 
 protected:
     // check whether the coordinates are along the respective axis
@@ -84,6 +92,8 @@ protected:
 
     // Type of output
     OutputType output_type;
+    
+    const bool use_timeout;
 
     // Check whether the given name is a sysfs device name
     bool is_sysfs_name(const char* name);
